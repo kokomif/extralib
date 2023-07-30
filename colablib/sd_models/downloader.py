@@ -46,7 +46,7 @@ def aria2_download(download_dir: str, filename: str , url: str, quiet: bool=Fals
     """
     if not quiet:
         start_time = time.time()
-        cprint(f"Downloading '{filename}' from '{url}' ...", color="blue")
+        cprint(f"Downloading [ {filename} ]...", color="blue")
 
     aria2_config = {
         "console-log-level"         : "error",
