@@ -46,7 +46,7 @@ def aria2_download(download_dir: str, filename: str , url: str, quiet: bool=Fals
     """
     if not quiet:
         start_time = time.time()
-        cprint(f"Downloading [ {filename} ]...", style="blink", color="flat_cyan")
+        cprint(f"Downloading [ {filename} ]...", color="flat_cyan")
 
     aria2_config = {
         "console-log-level"         : "error",
@@ -65,7 +65,7 @@ def aria2_download(download_dir: str, filename: str , url: str, quiet: bool=Fals
     
     if not quiet:
         elapsed_time = calculate_elapsed_time(start_time)
-        cprint(f"Download of '{filename}' completed. Took {elapsed_time}.", color="green", style="bold")
+        cprint(f"Done in {elapsed_time}.", color="flat_cyan")
 
 def gdown_download(url: str, dst: str, quiet: bool=False):
     """
@@ -80,7 +80,7 @@ def gdown_download(url: str, dst: str, quiet: bool=False):
     """
     if not quiet:
         start_time = time.time()
-        cprint(f"Starting download with gdown...", color="green")
+        cprint(f"Starting download with gdown...", color="flat_cyan")
 
     options = {
         "uc?id"         : {},
@@ -93,7 +93,7 @@ def gdown_download(url: str, dst: str, quiet: bool=False):
             output = gdown.download(url, os.path.join(dst, ""), quiet=True, **kwargs)
             if not quiet:
                 elapsed_time = calculate_elapsed_time(start_time)
-                cprint(f"Download completed. Took {elapsed_time}.", color="green")
+                cprint(f"Download completed. Took {elapsed_time}.", color="flat_cyan")
             return output
 
     os.chdir(dst)
@@ -101,7 +101,7 @@ def gdown_download(url: str, dst: str, quiet: bool=False):
 
     if not quiet:
         elapsed_time = calculate_elapsed_time(start_time)
-        cprint(f"Download completed. Took {elapsed_time}.", color="green")
+        cprint(f"Download completed. Took {elapsed_time}.", color="flat_cyan")
 
     return output
 
@@ -115,7 +115,7 @@ def gdown_download(url: str, dst: str, quiet: bool=False):
 #     """
 #     if not quiet:
 #         start_time = time.time()
-#         cprint(f"Starting download with mega.py...", color="green")
+#         cprint(f"Starting download with mega.py...", color="flat_cyan")
 
 #     mega = Mega()
 #     m = mega.login()  # add login credentials if needed
@@ -123,7 +123,7 @@ def gdown_download(url: str, dst: str, quiet: bool=False):
     
 #     if not quiet:
 #         elapsed_time = calculate_elapsed_time(start_time)
-#         cprint(f"Download completed. Took {elapsed_time}.", color="green")
+#         cprint(f"Download completed. Took {elapsed_time}.", color="flat_cyan")
 
 #     return file
 
@@ -142,7 +142,7 @@ def get_modelname(url: str, quiet: bool=False, user_header: str=None) -> None:
 
     if filename.endswith(SUPPORTED_EXTENSIONS):
         if not quiet:
-            cprint(f"Filename obtained: '{filename}'", color="green")
+            cprint(f"Filename obtained: '{filename}'", color="flat_cyan")
         return filename
 
     if not quiet:
@@ -167,11 +167,11 @@ def download(url: str, dst: str, filename:str= None, user_header: str=None, quie
     elif "drive/MyDrive" in url:
         if not quiet:
             start_time = time.time()
-            cprint(f"Copying file '{filename}'...", color="green")
+            cprint(f"Copying file '{filename}'...", color="flat_cyan")
         Path(os.path.join(dst, filename)).write_bytes(Path(url).read_bytes())
         if not quiet:
             elapsed_time = calculate_elapsed_time(start_time)
-            cprint(f"Copying completed. Took {elapsed_time}.", color="green")
+            cprint(f"Copying completed. Took {elapsed_time}.", color="flat_cyan")
     else:
         if "huggingface.co" in url:
             url = url.replace("/blob/", "/resolve/")
@@ -192,7 +192,7 @@ def batch_download(urls: list, dst: str, desc: str = None, user_header: str = No
 
     with ThreadPoolExecutor() as executor:
         futures = [executor.submit(download, url, dst, user_header=user_header, quiet=True) for url in urls]
-        with tqdm(total=len(futures), unit='file', disable=quiet, desc=cprint(desc, color="green", tqdm_desc=True)) as pbar:
+        with tqdm(total=len(futures), unit='file', disable=quiet, desc=cprint(desc, color="flat_cyan", tqdm_desc=True)) as pbar:
             for future in as_completed(futures):
                 try:
                     future.result()
@@ -210,7 +210,7 @@ def get_most_recent_file(directory: str, quiet: bool=False):
     Returns:
         str or None     : The path to the most recent file, or None if no files are found.
     """
-    cprint(f"Getting filename from most recent file...", color="green")
+    cprint(f"Getting filename from most recent file...", color="flat_cyan")
 
     files = glob.glob(os.path.join(directory, "*"))
     if not files:
@@ -223,7 +223,7 @@ def get_most_recent_file(directory: str, quiet: bool=False):
 
     if basename.endswith(SUPPORTED_EXTENSIONS):
         if not quiet:
-            cprint(f"Filename obtained: {basename}", color="green")
+            cprint(f"Filename obtained: {basename}", color="flat_cyan")
 
     return most_recent_file
 
