@@ -47,7 +47,7 @@ def clone_repo(url, cwd=None, directory=None, branch=None, commit_hash=None, rec
             message = f"Cloning '{parsed_url}' failed. Error: {result.stderr}"
 
         if not quiet and not batch:
-            color = "green" if not any(item in message for item in ["Failed", "Error", "failed", "error"]) else "red"
+            color = "flat_cyan" if not any(item in message for item in ["Failed", "Error", "failed", "error"]) else "red"
             cprint(message, color=color)
             
         if commit_hash and directory:
@@ -92,7 +92,7 @@ def checkout_repo(directory, reference, create=False, args="", quiet=False, batc
         message = f"An unexpected error occurred while checking out the repository: {str(e)}"
 
     if not quiet and not batch:
-        color = "red" if "Failed" in message or "Error" in message else "green"
+        color = "red" if "Failed" in message or "Error" in message else "flat_cyan"
         cprint(message, color=color)
 
     return message
@@ -189,7 +189,7 @@ def reset_repo(directory, commit, hard=False, args="", quiet=False):
         message = f"An unexpected error occurred while resetting the repository: {str(e)}"
 
     if not quiet:
-        color = "red" if "Failed" in message or "Error" in message else "green"
+        color = "red" if "Failed" in message or "Error" in message else "flat_cyan"
         cprint(message, color=color)
 
     return message
@@ -237,7 +237,7 @@ def update_repo(fetch=False, pull=True, origin=None, cwd=None, args="", quiet=Fa
                 message = f"'{repo_name}' updated to the latest version"
 
         if not quiet and not batch:
-            color = "green" if not any(item in message for item in ["Failed", "Error", "failed", "error"]) else "red"
+            color = "flat_cyan" if not any(item in message for item in ["Failed", "Error", "failed", "error"]) else "red"
             cprint(message, color=color)
 
     except Exception as e:
@@ -263,7 +263,7 @@ def batch_clone(urls, desc=None, cwd=None, directory=None, branch=None, commit_h
         recursive   (bool, optional)    : Flag to recursively clone submodules. Defaults to False.
     """
     if desc is None:
-        desc = cprint("Cloning...", color="green", tqdm_desc=True)
+        desc = cprint("Cloning...", color="flat_cyan", tqdm_desc=True)
 
     results = {}  # Store clone status messages
 
@@ -285,7 +285,7 @@ def batch_clone(urls, desc=None, cwd=None, directory=None, branch=None, commit_h
                 if "already exists" in message.lower():
                     color = "yellow"
                 elif not any(item.lower() in message.lower() for item in ["failed", "error"]):
-                    color = "green"
+                    color = "flat_cyan"
                 else:
                     color = "red"
                 cprint(" [-]", message, color=color)
@@ -308,7 +308,7 @@ def batch_update(fetch=False, pull=True, origin=None, directory=None, args="", q
         directory = [os.path.join(directory, name) for name in os.listdir(directory) if os.path.isdir(os.path.join(directory, name))]
 
     if desc is None:
-        desc = cprint("Updating...", color="green", tqdm_desc=True)
+        desc = cprint("Updating...", color="flat_cyan", tqdm_desc=True)
 
     results = {}  # Store update status messages
 
@@ -327,7 +327,7 @@ def batch_update(fetch=False, pull=True, origin=None, directory=None, args="", q
         for future, message in results.items():
             if message:
                 if not any(item.lower() in message.lower() for item in ["failed", "error"]):
-                    color = "green"
+                    color = "flat_cyan"
                 else:
                     if "already exists" in message.lower():
                         color = "yellow"
