@@ -142,7 +142,7 @@ def get_modelname(url: str, quiet: bool=False, user_header: str=None) -> None:
 
     if filename.endswith(SUPPORTED_EXTENSIONS):
         if not quiet:
-            cprint(f"Filename obtained: '{filename}'", color="flat_cyan")
+            cprint(f"Getting filename : [ {filename} ]", color="flat_cyan")
         return filename
 
     if not quiet:
