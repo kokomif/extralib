@@ -80,7 +80,7 @@ def gdown_download(url: str, dst: str, quiet: bool=False):
     """
     if not quiet:
         start_time = time.time()
-        cprint(f"Starting download with gdown...", color="flat_cyan")
+        cprint(f"Downloading from Google Drive...", color="flat_cyan")
 
     options = {
         "uc?id"         : {},
@@ -101,7 +101,7 @@ def gdown_download(url: str, dst: str, quiet: bool=False):
 
     if not quiet:
         elapsed_time = calculate_elapsed_time(start_time)
-        cprint(f"Download completed. Took {elapsed_time}.", color="flat_cyan")
+        cprint(f"Download completed within {elapsed_time}.", color="flat_cyan")
 
     return output
 
@@ -146,7 +146,7 @@ def get_modelname(url: str, quiet: bool=False, user_header: str=None) -> None:
         return filename
 
     if not quiet:
-        cprint(f"Failed to obtain filename.", color="yellow")
+        cprint(f"Cannot retrieve filename.", color="yellow")
 
     return None
 
